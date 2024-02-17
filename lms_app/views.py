@@ -15,20 +15,22 @@ from lms_app.services.overdue_service import overdue_service
 @api_view(['POST'])
 def handle_event(request):
     book_id = int(request.data.get('book_id'))
-    member_id = int(request.data.get('member_id'))
+    member_id = int(request.data.get('member_id')) if request.data.get('member_id') else None
     date = request.data.get('date')
     event_type = request.data.get('eventtype')
-    circulation_dm = CirculationDomainModel(member_id=member_id, book_id=book_id, issue_date=date)
+    circulation_dm = CirculationDomainModel(member_id=member_id, book_id=book_id)
     if event_type == 'checkout':
         # checkout_book(request)
+        circulation_dm.issue_date = date
         circulation_service.checkout_book(circulation_dm)
         return Response({'message': 'success'})
     if event_type == 'return':
+        circulation_dm.return_date = date
         circulation_service.return_book(circulation_dm)
         return Response({'message': 'success, book returned successfuly'})
-    if event_type == 'fulfil':
+    if event_type == 'fulfill':
         fulfil_request = circulation_service.fulfil_reservation(book_id, date)
-
+        return Response({'message': 'success, book fulfilled successfuly'})
 
 @transaction.atomic
 @api_view(['POST'])

@@ -5,13 +5,14 @@ from datetime import datetime
 
 class CirculationDomainModel(BaseModel):
     id: Optional[int] = -1
-    member_id: int
+    member_id: Optional[int] = None
     book_id: int
     issue_date: Optional[datetime] = None
     return_date: Optional[datetime] = None
 
     class Config:
         from_attributes = True
+
 
 
 class ReservationDomainModel(BaseModel):

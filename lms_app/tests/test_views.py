@@ -27,7 +27,7 @@ class TestApiEndpoints(TestCase):
     def setUpClass(cls):
         super().setUpClass()
 
-        with open('dj_test_app/tests/testing.json', 'r') as f:
+        with open('lms_app/tests/testing.json', 'r') as f:
             cls.test_data = json.load(f)
 
     def test_event_endpoints(self):

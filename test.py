@@ -13,4 +13,4 @@ for event in test_data:
         'eventtype': event['eventtype'],
     }
     print(f"processing event {data['eventtype']}")
-    response = requests.post('http://localhost:8000/handle_event', json=data)
+    response = requests.post('http://localhost:8000/handle/', json=data)
